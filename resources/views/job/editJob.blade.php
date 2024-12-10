@@ -114,21 +114,14 @@
 
         <!-- Emails to receive applications -->
         <label class="form-label">Emails to receive applications</label>
-        <div class="input-group input-group-outline mb-3">
-            <div id="email-input-container">
-                <div class="email-input-wrapper">
-                    <input type="email" class="form-control email-input" placeholder="Enter email" name="emails_to_receive_applications[]" value="{{ old('emails_to_receive_applications.0') }}">
-                    <button type="button" class="btn btn-danger btn-sm delete-email mt-2">Delete</button>
-                </div>
-            </div>
-        </div>
+        
 
         <!-- Add another email button -->
-        <button type="button" class="btn btn-link" id="add-email">Add another email</button>
+        <button type="button" class="btn btn-link" id="add-email">Add email</button>
 
         <!-- Submit button -->
         <div class="text-center">
-            <button type="submit" class="btn btn-lg bg-gradient-dark btn-lg w-100 mt-4 mb-0">Post Job</button>
+            <button type="submit" class="btn btn-lg bg-gradient-dark btn-lg w-100 mt-4 mb-0">Update</button>
         </div>
     </form>
 </div>
@@ -139,46 +132,52 @@
 
 @push('scripts')
 <script>
-  document.getElementById('add-email').addEventListener('click', function() {
-    // Create a new email input wrapper
-    const newEmailWrapper = document.createElement('div');
-    newEmailWrapper.classList.add('email-input-wrapper');
-
-    // Create the new email input field
-    const newEmailInput = document.createElement('input');
-    newEmailInput.type = 'email';
-    newEmailInput.classList.add('form-control', 'email-input');
-    newEmailInput.placeholder = 'Enter email';
-    newEmailInput.name = 'emails_to_receive_applications[]'; // Array syntax for multiple email inputs
-
-    // Create the delete button
-    const deleteButton = document.createElement('button');
-    deleteButton.type = 'button';
-    deleteButton.classList.add('btn', 'btn-danger', 'btn-sm', 'delete-email', 'mt-2');
-    deleteButton.textContent = 'Delete';
-
-    // Append the new email input and delete button to the wrapper
-    newEmailWrapper.appendChild(newEmailInput);
-    newEmailWrapper.appendChild(deleteButton);
-
-    // Append the new wrapper to the email input container
-    document.getElementById('email-input-container').appendChild(newEmailWrapper);
-
-    // Add event listener for the delete button
-    deleteButton.addEventListener('click', function() {
-      newEmailWrapper.remove(); // Remove the email input field and button wrapper
-    });
-  });
   document.addEventListener('DOMContentLoaded', function () {
+    // Handle the delete button click for existing emails
     document.querySelectorAll('.delete-email').forEach(function (deleteButton) {
         deleteButton.addEventListener('click', function () {
             const emailWrapper = this.closest('.email-input-wrapper');
             const hiddenEmailInput = emailWrapper.querySelector('.email-id');
+            const emailInput = emailWrapper.querySelector('.email-input'); // The email input field
+
+            // Mark this email for deletion by clearing its value in the hidden input
             if (hiddenEmailInput) {
-                // Mark this email for deletion by removing its value
-                hiddenEmailInput.value = '';
+                hiddenEmailInput.value = ''; // Remove the ID to prevent it from being submitted
             }
-            emailWrapper.style.display = 'none'; // Hide the email input wrapper
+
+            // Hide the email input wrapper
+            emailWrapper.style.display = 'none';
+
+            // Remove the email from the visible input array
+            if (emailInput) {
+                emailInput.disabled = true; // Disable the email input field so it doesn't get submitted
+            }
+        });
+    });
+
+    // Add new email input field
+    document.getElementById('add-email').addEventListener('click', function() {
+        const newEmailWrapper = document.createElement('div');
+        newEmailWrapper.classList.add('email-input-wrapper');
+
+        const newEmailInput = document.createElement('input');
+        newEmailInput.type = 'email';
+        newEmailInput.classList.add('form-control', 'email-input');
+        newEmailInput.placeholder = 'Enter email';
+        newEmailInput.name = 'emails_to_receive_applications[]'; 
+
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.classList.add('btn', 'btn-danger', 'btn-sm', 'delete-email', 'mt-2');
+        deleteButton.textContent = 'Delete';
+
+        newEmailWrapper.appendChild(newEmailInput);
+        newEmailWrapper.appendChild(deleteButton);
+
+        document.getElementById('email-input-container').appendChild(newEmailWrapper);
+
+        deleteButton.addEventListener('click', function() {
+            newEmailWrapper.remove(); // Remove the new email input field and its wrapper
         });
     });
 });

@@ -130,7 +130,7 @@
     newEmailInput.type = 'email';
     newEmailInput.classList.add('form-control', 'email-input');
     newEmailInput.placeholder = 'Enter email';
-    newEmailInput.name = 'emails[]'; // Array syntax for multiple email inputs
+    newEmailInput.name = 'emails_to_receive_applications[]'; // Array syntax for multiple email inputs
 
     // Create the delete button
     const deleteButton = document.createElement('button');
