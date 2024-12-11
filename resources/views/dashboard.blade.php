@@ -130,7 +130,8 @@
         <div class="ms-3">
           <h3 class="mb-0 h4 font-weight-bolder">Dashboard</h3>
           <p class="mb-4">
-            Check the sales, value and bounce rate by country.
+            Manage and review applicant information.
+
           </p>
         </div>
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -138,8 +139,8 @@
             <div class="card-header p-2 ps-3">
               <div class="d-flex justify-content-between">
                 <div>
-                  <p class="text-sm mb-0 text-capitalize">Today's Money</p>
-                  <h4 class="mb-0">$53k</h4>
+                  <p class="text-sm mb-0 text-capitalize">Total Application</p>
+                  <h4 class="mb-0">{{$acount}}</h4>
                 </div>
                 <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
                   <i class="material-symbols-rounded opacity-10">weekend</i>
@@ -157,11 +158,11 @@
             <div class="card-header p-2 ps-3">
               <div class="d-flex justify-content-between">
                 <div>
-                  <p class="text-sm mb-0 text-capitalize">Today's Users</p>
-                  <h4 class="mb-0">2300</h4>
+                  <p class="text-sm mb-0 text-capitalize">Available Openings</p>
+                  <h4 class="mb-0">{{$jcount}}</h4>
                 </div>
                 <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
-                  <i class="material-symbols-rounded opacity-10">person</i>
+                  <i class="material-symbols-rounded opacity-10">leaderboard</i>
                 </div>
               </div>
             </div>
@@ -209,6 +210,45 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 mt-4">
+          <div class="card">
+            <div class="card-header pb-0 px-3">
+              <h6 class="mb-0">Applications</h6>
+            </div>
+            <div class="card-body pt-4 p-3">
+              <ul class="list-group">
+                @forelse($applications as $application)
+                <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+                  <div class="d-flex flex-column">
+                    <h6 class="mb-3 text-sm">{{$application->name}}</h6>
+                    <span class="mb-2 text-xs">Applied for: <span class="text-dark font-weight-bold ms-sm-2">{{$application->job->job_title}}</span></span>
+
+                    <span class="mb-2 text-xs">Phone Number: <span class="text-dark font-weight-bold ms-sm-2">{{$application->phone}}</span></span>
+                    <span class="mb-2 text-xs">Email: <span class="text-dark ms-sm-2 font-weight-bold">{{$application->email}}</span></span>
+                    <span class="text-xs">Age <span class="text-dark ms-sm-2 font-weight-bold">{{$application->age}}</span></span>
+                  </div>
+                  <div class="ms-auto text-end">
+                    <a href="{{ asset('storage/' . $application->resume) }}" target="_blank" class="btn btn-primary">View Resume</a>
+                    <a href="{{ asset('storage/' . $application->resume) }}" download class="btn btn-success">
+                      Download Resume
+                    </a>
+
+
+                  </div>
+                </li>
+                @empty
+                <li class="list-group-item text-center">No applications available.</li>
+
+                @endforelse
+
+
+              </ul>
+            </div>
+          </div>
+        </div>
+
       </div>
       <div class="row">
         <div class="col-lg-4 col-md-6 mt-4 mb-4">
@@ -318,13 +358,13 @@
                       </td>
 
                       <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold"> {{$job->posted_date}} </span>
+                        <span class="text-xs font-weight-bold"> {{$job->posted_date->format('d/m/Y')}} </span>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold"> {{$job->last_date_to_apply}} </span>
+                        <span class="text-xs font-weight-bold"> {{$job->last_date_to_apply->format('d/m/Y')}} </span>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="text-xs font-weight-bold"> 20 </span>
+                        <span class="text-xs font-weight-bold"> {{$job->applications_count}} </span>
                       </td>
                       <td class="align-middle text-center text-sm">
                         <a href="{{route('Job.edit',$job->id)}}" class="text-dark me-2" title="Edit">
@@ -725,6 +765,14 @@
         }, 3000);
       }
     })
+  </script>
+
+  <script>
+    function showPdf(url) {
+      console.log("URL being passed: " + url);
+      var iframe = document.getElementById('pdfViewer');
+      iframe.src = "https://docs.google.com/gview?url=" + url + "&embedded=true";
+    }
   </script>
 </body>
 

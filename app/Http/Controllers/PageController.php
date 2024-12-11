@@ -3,22 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Applicant;
-use Illuminate\Http\Request;
 use App\Models\JobCard;
+use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class PageController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {   
-        $jobs = Jobcard::withCount('applications')->get();
-        $applications = Applicant::with('job')->get();
-        $acount = Applicant::count();
-        $jcount = JobCard::count();
-
-        return view('dashboard',compact('jobs','applications','acount','jcount'));
+    {
+        $jobs = JobCard::all();
+        return view('home', compact('jobs'));
     }
 
     /**
@@ -34,7 +30,23 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate(
+            [
+                'job_card_id'=>'required',
+                'name' => 'required|string',
+                'email' => 'required|string|email',
+                'age' =>'required|integer',
+                'phone'=>'required|string',
+                'resume'=>'required|file|mimes:pdf,doc,docx'
+            ]
+        );
+
+        if($request->hasfile('resume')){
+            $path = $request->file('resume')->store('resumes','public');
+            $validate['resume']=$path;
+        }
+        Applicant::create($validate);
+        return back()->with('success', 'Application submitted successfully!');
     }
 
     /**
