@@ -3,7 +3,7 @@
 @section('title','Jobs')
 
 @section('content')
-<div class="col-xl-5 col-lg-6 col-md-7 d-flex flex-column ">
+<div class="col-xl-10 col-lg-12 col-md-12 d-flex flex-column ">
   <div class="card card-plain">
     <div class="card-header">
       <h4 class="font-weight-bolder">Add job details :</h4>
@@ -22,44 +22,62 @@
     <form role="form" method="POST" action="{{ route('Job.store') }}" enctype="multipart/form-data">
         @csrf
         
-        <!-- Add LOGO -->
+        <div class="row">
+    <!-- Add Logo -->
+    <div class="col-md-6">
         <p class="mb-0">Add Logo</p>
         <div class="input-group input-group-outline mb-3">
             <label class="form-label" for="logo"></label>
             <input type="file" class="form-control" id="logo" name="logo">
         </div>
-
-        <!-- Job title -->
+    </div>
+    <!-- Job Title -->
+    <div class="col-md-6">
+        <p class="mb-0">Job Title</p>
         <div class="input-group input-group-outline mb-3">
             <label class="form-label">Job title</label>
             <input type="text" class="form-control" name="job_title" value="{{ old('job_title') }}">
         </div>
+    </div>
+</div>
 
-        <!-- Location -->
-        <div class="input-group input-group-outline mb-3">
-            <label class="form-label">Location</label>
-            <input type="text" class="form-control" name="location" value="{{ old('location') }}">
+        <div class="row">
+            <!-- Location -->
+            <div class="col-md-6 mb-3">
+                <div class="input-group input-group-outline mb-3">
+                    <label class="form-label">Location</label>
+                    <input type="text" class="form-control" name="location" value="{{ old('location') }}">
+                </div>
+            </div>
+             <!-- Whatsapp No -->
+             <div class="col-md-6 mb-3">
+                 <div class="input-group input-group-outline mb-3">
+                    <label class="form-label">Whatsapp No</label>
+                    <input type="text" class="form-control" name="whatsapp_no" value="{{ old('whatsapp_no') }}">
+                             </div>
+             </div>
         </div>
 
-        <!-- Posted date -->
-        <p class="mb-0">Posted date</p>
-        <div class="input-group input-group-outline mb-3">
-            <label class="form-label"></label>
-            <input type="date" class="form-control" name="posted_date" value="{{ old('posted_date') }}">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <!-- Posted date -->
+                <p class="mb-0">Posted date</p>
+                <div class="input-group input-group-outline mb-3">
+                    <label class="form-label"></label>
+                    <input type="date" class="form-control" name="posted_date" value="{{ old('posted_date') }}">
+                </div>
+            </div>
+            <!-- Last date to apply -->
+            <div class="col-md-6 mb-3">
+                <p class="mb-0">Last date to apply</p>
+                <div class="input-group input-group-outline mb-3">
+                    <label class="form-label"></label>
+                    <input type="date" class="form-control" name="last_date_to_apply" value="{{ old('last_date_to_apply') }}">
+                </div>
+            </div>
         </div>
 
-        <!-- Last date to apply -->
-        <p class="mb-0">Last date to apply</p>
-        <div class="input-group input-group-outline mb-3">
-            <label class="form-label"></label>
-            <input type="date" class="form-control" name="last_date_to_apply" value="{{ old('last_date_to_apply') }}">
-        </div>
-
-        <!-- Whatsapp No -->
-        <div class="input-group input-group-outline mb-3">
-            <label class="form-label">Whatsapp No</label>
-            <input type="text" class="form-control" name="whatsapp_no" value="{{ old('whatsapp_no') }}">
-        </div>
+       
 
         <!-- Email of the host -->
         <div class="input-group input-group-outline mb-3">
@@ -86,7 +104,7 @@
         <div id="email-input-container">
     @if(old('emails_to_receive_applications') || isset($jobCard))
         @foreach(old('emails_to_receive_applications', $jobCard->emails_to_receive_applications ?? []) as $index => $email)
-            <div class="email-input-wrapper">
+            <div class="email-input-wrapper input-group input-group-outline mb-3">
                 <input type="email" class="form-control email-input" 
                        placeholder="Enter email" 
                        name="emails_to_receive_applications[]" 
@@ -95,11 +113,11 @@
             </div>
         @endforeach
     @else
-        <div class="email-input-wrapper ">
+        <div class="email-input-wrapper input-group input-group-outline mb-3">
             <input type="email" class="form-control email-input" 
                    placeholder="Enter email" 
                    name="emails_to_receive_applications[]">
-            <button type="button" class="btn btn-danger btn-sm delete-email mt-2 mx-3">Delete</button>
+            <button type="button" class="btn btn-danger btn-sm delete-email mt-2 ">Delete</button>
         </div>
     @endif
 </div>
@@ -123,7 +141,7 @@
   document.getElementById('add-email').addEventListener('click', function() {
     // Create a new email input wrapper
     const newEmailWrapper = document.createElement('div');
-    newEmailWrapper.classList.add('email-input-wrapper');
+    newEmailWrapper.classList.add('email-input-wrapper','input-group', 'input-group-outline', 'mb-3');
 
     // Create the new email input field
     const newEmailInput = document.createElement('input');

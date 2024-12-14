@@ -17,7 +17,11 @@ class jobController extends Controller
         $jobs = Jobcard::all();
 
 
-        return view('job/addJob', compact('jobs'));
+        return view('jobs', compact('jobs'));
+    }
+
+    public function addjob(){
+        return view('job.addjob');
     }
 
     public function viewPdf($id)
@@ -46,7 +50,7 @@ class jobController extends Controller
             'job_title' => 'required',
             'location' => 'required',
             'posted_date' => 'required|date',
-            'last_date_to_apply' => 'required|date',
+            'last_date_to_apply' => 'required|date|after_or_equal:posted_date',
             'whatsapp_no' => 'required',
             'email_of_host' => 'required',
             'job_features' => 'required',

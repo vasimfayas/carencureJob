@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone');
             $table->string('resume');
-            $table->unsignedInteger('age');
+            $table->string('gender');
+            $table->string('nationality');
+            $table->date('dob');
             $table->string('email');
             $table->timestamps();
         });

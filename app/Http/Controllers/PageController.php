@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Applicant;
 use App\Models\JobCard;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -13,7 +14,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        $jobs = JobCard::all();
+        $jobs = JobCard::where('last_date_to_apply','>=',Carbon::now())->get();
         return view('home', compact('jobs'));
     }
 
@@ -35,8 +36,10 @@ class PageController extends Controller
                 'job_card_id'=>'required',
                 'name' => 'required|string',
                 'email' => 'required|string|email',
-                'age' =>'required|integer',
+                'dob' =>'required|date',
                 'phone'=>'required|string',
+                'nationality'=>'required|string',
+                'gender'=>'required|string',
                 'resume'=>'required|file|mimes:pdf,doc,docx'
             ]
         );

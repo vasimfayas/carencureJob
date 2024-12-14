@@ -3,7 +3,7 @@
 @section('title','Jobs')
 
 @section('content')
-<div class="col-xl-5 col-lg-6 col-md-7 d-flex flex-column ">
+<div class="col-xl-9 col-lg-12 col-md-10 d-flex flex-column ">
   <div class="card card-plain">
     <div class="card-header">
       <h4 class="font-weight-bolder">Edit job details :</h4>
@@ -22,63 +22,83 @@
     <form role="form" method="POST" action="{{ route('Job.update',$job->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT') 
-        
-        <!-- Add LOGO -->
-        <p class="mb-0">Add Logo</p>
-        <div class="input-group input-group-outline mb-3">
-            <label class="form-label" for="logo"></label>
-            <input type="file" class="form-control" id="logo" name="logo">
-           
-        </div>
-        @if($job->logo)
-        <div class="mb-3">
-            <label>Current Logo</label>
-            <img src="{{asset('storage/'.$job->logo)}}" alt="Logo" class="img-fluid" style="max-height: 100px;">
-        </div>
-        @endif
+      <div class="row">
+          
+          <!-- Add LOGO -->
+          <div class="col-md-6 mb-3">
+              <p class="mb-0">Add Logo</p>
+              <div class="input-group input-group-outline mb-3">
+                  <label class="form-label" for="logo"></label>
+                  <input type="file" class="form-control" id="logo" name="logo">
+              
+              </div>
+          </div>
+          <div class="col-md-6 mb-3">
+              @if($job->logo)
+              <div class="mb-3">
+                  <label>Current Logo</label>
+                  <img src="{{asset('storage/'.$job->logo)}}" alt="Logo" class="img-fluid" style="max-height: 100px;">
+              </div>
+              @endif
+          </div>
+      </div>
 
 
-        <!-- Job title -->
-        <p class="mb-0">Job title</p>
-        <div class="input-group input-group-outline mb-3">
-            <label class="form-label"></label>
-            <input type="text" class="form-control" name="job_title" value="{{ old('Job_title',$job->job_title) }}">
-        </div>
-
-        <!-- Location -->
-        <p class="mb-0">Location</p>
-        <div class="input-group input-group-outline mb-3">
-            <label class="form-label"></label>
-            <input type="text" class="form-control" name="location" value="{{ old('location',$job->location) }}">
-        </div>
-
-        <!-- Posted date -->
-        <p class="mb-0">Posted date</p>
-        <div class="input-group input-group-outline mb-3">
-            <label class="form-label"></label>
-            <input type="date" class="form-control" name="posted_date" value="{{ old('posted_date',$job->posted_date) }}">
-        </div>
-
-        <!-- Last date to apply -->
-        <p class="mb-0">Last date to apply</p>
-        <div class="input-group input-group-outline mb-3">
-            <label class="form-label"></label>
-            <input type="date" class="form-control" name="last_date_to_apply" value="{{ old('last_date_to_apply',$job->last_date_to_apply) }}">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <!-- Job title -->
+                <p class="mb-0">Job title</p>
+                <div class="input-group input-group-outline mb-3">
+                    <label class="form-label"></label>
+                    <input type="text" class="form-control" name="job_title" value="{{ old('Job_title',$job->job_title) }}">
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <!-- Location -->
+                <p class="mb-0">Location</p>
+                <div class="input-group input-group-outline mb-3">
+                    <label class="form-label"></label>
+                    <input type="text" class="form-control" name="location" value="{{ old('location',$job->location) }}">
+                </div>
+            </div>
         </div>
 
-        <!-- Whatsapp No -->
-        <p class="mb-0">Whatsapp No</p>
-        <div class="input-group input-group-outline mb-3">
-            <label class="form-label"></label>
-            <input type="text" class="form-control" name="whatsapp_no" value="{{ old('whatsapp_no',$job->whatsapp_no) }}">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <!-- Posted date -->
+                <p class="mb-0">Posted date</p>
+                <div class="input-group input-group-outline mb-3">
+                    <label class="form-label"></label>
+                    <input type="date" class="form-control" name="posted_date" value="{{ old('posted_date',optional($job->posted_date)->format('Y-m-d')) }}">
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <!-- Last date to apply -->
+                <p class="mb-0">Last date to apply</p>
+                <div class="input-group input-group-outline mb-3">
+                    <label class="form-label"></label>
+                    <input type="date" class="form-control" name="last_date_to_apply" value="{{ old('last_date_to_apply',optional($job->last_date_to_apply)->format('Y-m-d')) }}">
+                </div>
+            </div>
         </div>
 
-        <!-- Email of the host -->
-
-        <p class="mb-0">Email of the host</p>
-        <div class="input-group input-group-outline mb-3">
-            <label class="form-label"></label>
-            <input type="text" class="form-control" name="email_of_host" value="{{ old('email_of_host',$job->email_of_host) }}">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <!-- Whatsapp No -->
+                <p class="mb-0">Whatsapp No</p>
+                <div class="input-group input-group-outline mb-3">
+                    <label class="form-label"></label>
+                    <input type="text" class="form-control" name="whatsapp_no" value="{{ old('whatsapp_no',$job->whatsapp_no) }}">
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <!-- Email of the host -->
+                <p class="mb-0">Email of the host</p>
+                <div class="input-group input-group-outline mb-3">
+                    <label class="form-label"></label>
+                    <input type="text" class="form-control" name="email_of_host" value="{{ old('email_of_host',$job->email_of_host) }}">
+                </div>
+            </div>
         </div>
 
         <!-- Job features -->
@@ -96,9 +116,10 @@
         </div>
 
         <div id="email-input-container">
+        <p class="mb-0">Emails to receive applications</p>
     @if(isset($job))
         @foreach($job->emails as $email)
-            <div class="email-input-wrapper">
+            <div class="email-input-wrapper input-group input-group-outline mb-3">
                 <input type="email" class="form-control email-input" 
                        placeholder="Enter email" 
                        name="emails_to_receive_applications[]" 
@@ -112,8 +133,7 @@
     @endif
 </div>
 
-        <!-- Emails to receive applications -->
-        <label class="form-label">Emails to receive applications</label>
+
         
 
         <!-- Add another email button -->
@@ -158,7 +178,7 @@
     // Add new email input field
     document.getElementById('add-email').addEventListener('click', function() {
         const newEmailWrapper = document.createElement('div');
-        newEmailWrapper.classList.add('email-input-wrapper');
+        newEmailWrapper.classList.add('email-input-wrapper','input-group', 'input-group-outline', 'mb-3');
 
         const newEmailInput = document.createElement('input');
         newEmailInput.type = 'email';

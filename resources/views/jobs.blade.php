@@ -1,9 +1,8 @@
-@extends('layouts.masterhome')
-@section('title','Home')
+@extends('layouts.master')
 
+@section('title','All Jobs')
 
 @section('content')
-
 
 <body>
     <div class="row">
@@ -13,6 +12,7 @@
                     <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">Jobs</h6>
                     </div>
+<a href="{{route('addjob')}}" class="btn btn-success mt-3">Add new job</a>
                 </div>
                 <div class="card-body px-0 pb-2">
                     <div class="table-responsive p-0">
