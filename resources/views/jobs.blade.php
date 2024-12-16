@@ -23,7 +23,7 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Posted Date</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Last Date</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Location</th>
-                                    <th class="text-secondary opacity-7"></th>
+                                  
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,11 +49,7 @@
                                     <td class="align-middle text-center">
                                         <span class="text-secondary text-xs font-weight-bold">{{ $job->location }}</span>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#applyModal-{{ $job->id }}">
-                                            Apply Now
-                                        </button>
-                                    </td>
+                                  
                                 </tr>
 
                                 <!-- Modal -->

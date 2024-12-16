@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jobcard;
+use App\Models\JobCard;
 use App\Models\Applicant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,14 +14,14 @@ class jobController extends Controller
      */
     public function index()
     {
-        $jobs = Jobcard::all();
+        $jobs = JobCard::all();
 
 
         return view('jobs', compact('jobs'));
     }
 
     public function addjob(){
-        return view('job.addjob');
+        return view('job.addJob');
     }
 
     public function viewPdf($id)
